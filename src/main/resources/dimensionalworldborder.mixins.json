@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "uk.me.joeclack.dimensionalworldborder.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "dimensionalworldborder.refmap.json",
+  "mixins": [
+    "MixinClientPacketListener",
+    "MixinPlayerList"
+  ],
+  "client": [
+  ],
+  "minVersion": "0.8"
+}
