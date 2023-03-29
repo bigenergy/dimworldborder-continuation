@@ -18,7 +18,7 @@ public class MixinPlayerList {
     @Inject(at=@At("TAIL"), method="sendLevelInfo(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/server/level/ServerLevel;)V", locals= LocalCapture.CAPTURE_FAILSOFT)
     public void sendLevelInfo(ServerPlayer player, ServerLevel level, CallbackInfo callbackInfo, WorldBorder worldborder) {
         WorldBorder otherWorldBorder = level.getWorldBorder();
-        DimensionalWorldBorder.NETWORK_CHANNEL.sendTo(new ClientboundInitialiseDimensionalBorderPacket(level, otherWorldBorder), player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
+        DimensionalWorldBorder.NETWORK_CHANNEL.sendTo(new ClientboundInitialiseDimensionalBorderPacket(level, otherWorldBorder), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
     @Inject(at=@At("HEAD"), method="addWorldborderListener(Lnet/minecraft/server/level/ServerLevel;)V", cancellable = true)
