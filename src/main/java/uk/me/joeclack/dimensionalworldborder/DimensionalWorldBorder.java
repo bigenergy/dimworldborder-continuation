@@ -124,7 +124,7 @@ public class DimensionalWorldBorder
             return;
         }
         ServerLevel level = (ServerLevel) levelAccessor;
-        LOGGER.info("Saving worldborder settings for '" + level.dimension().location().toString() + "'...");
+        //LOGGER.info("Saving worldborder settings for '" + level.dimension().location().toString() + "'...");
         DimensionalWBSavedData.get(level).setWorldborderSettings(level.getWorldBorder().createSettings());
     }
 
