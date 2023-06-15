@@ -112,6 +112,16 @@ public class DimensionalWorldBorder
         }
 
         LOGGER.info("Successfully completed server-starting setup.");
+
+        LOGGER.info("Attempt to fix TF border...");
+        int performCommand = event.getServer().getCommands().performPrefixedCommand(
+                event.getServer().createCommandSourceStack(),
+                "/dimworldborder twilightforest:twilight_forest center 0 0"
+        );
+
+        if (performCommand == 1) {
+            LOGGER.info("Fix applied!");
+        }
     }
 
     @SubscribeEvent

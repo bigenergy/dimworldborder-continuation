@@ -1,13 +1,10 @@
 package uk.me.joeclack.dimensionalworldborder;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.ImmutableStringReader;
 import com.mojang.brigadier.Message;
-import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.exceptions.CommandExceptionType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
@@ -75,7 +72,7 @@ public class DimensionalWBCommand {
             throw ERROR_SAME_DAMAGE_BUFFER.create(dimensionName);
         } else {
             worldborder.setDamageSafeZone((double)p_139258_);
-            p_139257_.sendSuccess(Component.translatable("commands.dimensionalworldborder.dimworldborder.damage.buffer.success", dimensionName, String.format(Locale.ROOT, "%.2f", p_139258_)), true);
+            p_139257_.sendSuccess(() -> Component.translatable("commands.dimensionalworldborder.dimworldborder.damage.buffer.success", dimensionName, String.format(Locale.ROOT, "%.2f", p_139258_)), true);
             return (int)p_139258_;
         }
     }
@@ -87,7 +84,7 @@ public class DimensionalWBCommand {
             throw ERROR_SAME_DAMAGE_AMOUNT.create(dimensionName);
         } else {
             worldborder.setDamagePerBlock((double)p_139271_);
-            p_139270_.sendSuccess(Component.translatable("commands.dimensionalworldborder.dimworldborder.damage.amount.success", dimensionName, String.format(Locale.ROOT, "%.2f", p_139271_)), true);
+            p_139270_.sendSuccess(() -> Component.translatable("commands.dimensionalworldborder.dimworldborder.damage.amount.success", dimensionName, String.format(Locale.ROOT, "%.2f", p_139271_)), true);
             return (int)p_139271_;
         }
     }
@@ -99,7 +96,7 @@ public class DimensionalWBCommand {
             throw ERROR_SAME_WARNING_TIME.create(dimensionName);
         } else {
             worldborder.setWarningTime(p_139261_);
-            p_139260_.sendSuccess(Component.translatable("commands.dimensionalworldborder.dimworldborder.warning.time.success", dimensionName, p_139261_), true);
+            p_139260_.sendSuccess(() -> Component.translatable("commands.dimensionalworldborder.dimworldborder.warning.time.success", dimensionName, p_139261_), true);
             return p_139261_;
         }
     }
@@ -111,7 +108,7 @@ public class DimensionalWBCommand {
             throw ERROR_SAME_WARNING_DISTANCE.create(dimensionName);
         } else {
             worldborder.setWarningBlocks(p_139274_);
-            p_139273_.sendSuccess(Component.translatable("commands.dimensionalworldborder.dimworldborder.warning.distance.success", dimensionName, p_139274_), true);
+            p_139273_.sendSuccess(() -> Component.translatable("commands.dimensionalworldborder.dimworldborder.warning.distance.success", dimensionName, p_139274_), true);
             return p_139274_;
         }
     }
@@ -119,7 +116,7 @@ public class DimensionalWBCommand {
     private static int getSize(CommandSourceStack p_139251_, ServerLevel dimension) {
         double d0 = dimension.getWorldBorder().getSize();
         String dimensionName = dimension.dimension().location().toString();
-        p_139251_.sendSuccess(Component.translatable("commands.dimensionalworldborder.dimworldborder.get", dimensionName, String.format(Locale.ROOT, "%.0f", d0)), false);
+        p_139251_.sendSuccess(() -> Component.translatable("commands.dimensionalworldborder.dimworldborder.get", dimensionName, String.format(Locale.ROOT, "%.0f", d0)), false);
         return Mth.floor(d0 + 0.5D);
     }
 
@@ -129,8 +126,8 @@ public class DimensionalWBCommand {
         if (worldborder.getCenterX() == (double)p_139264_.x && worldborder.getCenterZ() == (double)p_139264_.y) {
             throw ERROR_SAME_CENTER.create(dimensionName);
         } else if (!((double)Math.abs(p_139264_.x) > 2.9999984E7D) && !((double)Math.abs(p_139264_.y) > 2.9999984E7D)) {
-            worldborder.setCenter((double)p_139264_.x, (double)p_139264_.y);
-            p_139263_.sendSuccess(Component.translatable("commands.dimensionalworldborder.dimworldborder.center.success", dimensionName, String.format(Locale.ROOT, "%.2f", p_139264_.x), String.format("%.2f", p_139264_.y)), true);
+            worldborder.setCenter(p_139264_.x, p_139264_.y);
+            p_139263_.sendSuccess(() -> Component.translatable("commands.dimensionalworldborder.dimworldborder.center.success", dimensionName, String.format(Locale.ROOT, "%.2f", p_139264_.x), String.format("%.2f", p_139264_.y)), true);
             return 0;
         } else {
             throw ERROR_TOO_FAR_OUT.create();
@@ -151,13 +148,13 @@ public class DimensionalWBCommand {
             if (p_139255_ > 0L) {
                 worldborder.lerpSizeBetween(d0, p_139254_, p_139255_);
                 if (p_139254_ > d0) {
-                    p_139253_.sendSuccess(Component.translatable("commands.dimensionalworldborder.dimworldborder.set.grow", dimensionName, String.format(Locale.ROOT, "%.1f", p_139254_), Long.toString(p_139255_ / 1000L)), true);
+                    p_139253_.sendSuccess(() -> Component.translatable("commands.dimensionalworldborder.dimworldborder.set.grow", dimensionName, String.format(Locale.ROOT, "%.1f", p_139254_), Long.toString(p_139255_ / 1000L)), true);
                 } else {
-                    p_139253_.sendSuccess(Component.translatable("commands.dimensionalworldborder.dimworldborder.set.shrink", dimensionName, String.format(Locale.ROOT, "%.1f", p_139254_), Long.toString(p_139255_ / 1000L)), true);
+                    p_139253_.sendSuccess(() -> Component.translatable("commands.dimensionalworldborder.dimworldborder.set.shrink", dimensionName, String.format(Locale.ROOT, "%.1f", p_139254_), Long.toString(p_139255_ / 1000L)), true);
                 }
             } else {
                 worldborder.setSize(p_139254_);
-                p_139253_.sendSuccess(Component.translatable("commands.dimensionalworldborder.dimworldborder.set.immediate", dimensionName, String.format(Locale.ROOT, "%.1f", p_139254_)), true);
+                p_139253_.sendSuccess(() -> Component.translatable("commands.dimensionalworldborder.dimworldborder.set.immediate", dimensionName, String.format(Locale.ROOT, "%.1f", p_139254_)), true);
             }
 
             return (int)(p_139254_ - d0);
