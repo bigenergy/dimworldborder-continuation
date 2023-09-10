@@ -17,6 +17,7 @@ import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -97,6 +98,9 @@ public class DimensionalWorldBorder
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
+
+        LOGGER.info("Starting Dimensional Worldborder...");
+
         // Do something when the server starts
         LOGGER.info("Clearing overworld border listeners...");
 
@@ -113,14 +117,16 @@ public class DimensionalWorldBorder
 
         LOGGER.info("Successfully completed server-starting setup.");
 
-        LOGGER.info("Attempt to fix TF border...");
-        int performCommand = event.getServer().getCommands().performPrefixedCommand(
-                event.getServer().createCommandSourceStack(),
-                "/dimworldborder twilightforest:twilight_forest center 0 0"
-        );
+        if (ModList.get().isLoaded("twilightforest")) {
+            LOGGER.info("Attempt to fix TF border...");
+            int performCommand = event.getServer().getCommands().performPrefixedCommand(
+                    event.getServer().createCommandSourceStack(),
+                    "/dimworldborder twilightforest:twilight_forest center 0 0"
+            );
 
-        if (performCommand == 1) {
-            LOGGER.info("Fix applied!");
+            if (performCommand == 1) {
+                LOGGER.info("Fix applied!");
+            }
         }
     }
 
